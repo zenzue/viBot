@@ -7,9 +7,10 @@
 
 __author__ = "blackvkng"
 
-import os
 import Tkinter as tk
 import tkMessageBox as messagebox
+
+usage = "[?] Popup module usage: popup TEXT"
 
 def run(message):
 	root = tk.Tk()

