@@ -23,7 +23,7 @@ TARGET = None
 CHNL   = "#viBotChannel"
 PORT   = "6667"
 BASE   = "blackvkng"
-NICK   = "viBot" + getpass.getuser() + str(random.randrange(1, 999))
+NICK   = "viBot" + str(random.randrange(1, 999))
 
 IRC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
