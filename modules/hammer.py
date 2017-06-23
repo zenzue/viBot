@@ -111,7 +111,7 @@ def run(url):
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		s.connect((host,int(port)))
 		s.settimeout(1)
-	except socket.error as e:
+	except socket.error:
 		#print("\033[91mcheck server ip and port\033[0m")
 		pass
 
@@ -124,7 +124,6 @@ def run(url):
 			t2.daemon = True  # if thread is exist, it dies
 			t2.start()
 
-		start = time.time()
 		#tasking
 		item = 0
 
