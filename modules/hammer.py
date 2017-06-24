@@ -9,7 +9,7 @@
 from queue import Queue
 import time, sys, socket, threading, urllib2, random
 
-usage = ["[?] Dos module usage: set target www.google.com", "[?] Dos module usage: dos start"]
+usage = ["[?] Dos module usage: dos set target www.google.com", "[?] Dos module usage: dos start"]
 
 host = ''
 port = 80
